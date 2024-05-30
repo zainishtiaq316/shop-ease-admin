@@ -199,7 +199,7 @@ class _AdminDrawerWidgetState extends State<AdminDrawerWidget> {
                   Get.back();
               
 
-                   Get.to(() => AllCategoriesScreenAdmin());
+                   Get.to(() => AllCategoriesScreen());
                 
                 },
                 title: Text(
