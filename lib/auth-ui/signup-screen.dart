@@ -2,9 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
-import 'package:shopeaseadminpanel/controllers/signup-controller.dart';
 import 'package:shopeaseadminpanel/auth-ui/signin-screen.dart';
-import 'package:shopeaseadminpanel/utils/app-constant.dart';
+
+import '../controllers/signup-controller.dart';
+import '../utils/app-constant.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -17,7 +18,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final SignUpController signUpController = Get.put(SignUpController());
-    TextEditingController userNameController = TextEditingController();
+    TextEditingController firstNameController = TextEditingController();
+     TextEditingController secondNameController = TextEditingController();
     TextEditingController userEmailController = TextEditingController();
     TextEditingController userPhoneController = TextEditingController();
     TextEditingController userCityController = TextEditingController();
@@ -89,11 +91,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: TextFormField(
-                        controller: userNameController,
+                        controller: firstNameController,
                         cursorColor: AppConstant.appSecondaryColor,
                         keyboardType: TextInputType.name,
                         decoration: InputDecoration(
-                          hintText: "Username",
+                          hintText: "First Name",
                           contentPadding: EdgeInsets.only(top: 2.0, left: 8.0),
                           prefixIcon: Icon(
                             Icons.person,
@@ -112,6 +114,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                     )),
+             Container(
+                    margin: EdgeInsets.symmetric(horizontal: 5.0),
+                    width: Get.width,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextFormField(
+                        controller: secondNameController,
+                        cursorColor: AppConstant.appSecondaryColor,
+                        keyboardType: TextInputType.name,
+                        decoration: InputDecoration(
+                          hintText: "Second Name",
+                          contentPadding: EdgeInsets.only(top: 2.0, left: 8.0),
+                          prefixIcon: Icon(
+                            Icons.person,
+                            color: AppConstant.appSecondaryColor,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(color: Colors.grey.shade500),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                                color: AppConstant
+                                    .appSecondaryColor), // Border color when focused
+                          ),
+                        ),
+                      ),
+                    )),
+             
+             
+             
                 Container(
                     margin: EdgeInsets.symmetric(horizontal: 5.0),
                     width: Get.width,
@@ -274,7 +308,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         borderRadius: BorderRadius.circular(20.0)),
                     child: TextButton(
                       onPressed: () async {
-                        String name = userNameController.text.trim();
+                        String fname = firstNameController.text.trim();
+                         String sname = firstNameController.text.trim();
                         String email = userEmailController.text.trim();
                         String phone = userPhoneController.text.trim();
                         String city = userCityController.text.trim();
@@ -285,7 +320,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         RegExp emailRegex = RegExp(
                             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
-                        if (name.isEmpty ||
+                        if (fname.isEmpty ||
+                        sname.isEmpty ||
                             email.isEmpty ||
                             phone.isEmpty ||
                             city.isEmpty ||
@@ -295,10 +331,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               snackPosition: SnackPosition.BOTTOM,
                               backgroundColor: AppConstant.appSecondaryColor,
                               colorText: AppConstant.appTextColor);
-                        } else if (name.length < 4) {
+                        } else if (fname.length < 4) {
                           Get.snackbar(
                             "Error",
-                            "Name must be at least 4 characters long",
+                            "First Name must be at least 4 characters long",
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: AppConstant.appSecondaryColor,
+                            colorText: AppConstant.appTextColor,
+                          );
+                        }
+                        else if (sname.length < 4) {
+                          Get.snackbar(
+                            "Error",
+                            "Second Name must be at least 4 characters long",
                             snackPosition: SnackPosition.BOTTOM,
                             backgroundColor: AppConstant.appSecondaryColor,
                             colorText: AppConstant.appTextColor,
@@ -321,8 +366,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           );
                         } else {
                           UserCredential? userCredential =
-                              await signUpController.signUpMethod(name, email,
-                                  phone, city, password, userDeviceToken);
+                              await signUpController.signUpMethod(fname, email,
+                                  phone, city, password, userDeviceToken, sname);
 
                           if (userCredential != null) {
                             Get.snackbar("Verification email sent",
