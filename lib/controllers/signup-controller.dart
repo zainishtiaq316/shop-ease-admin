@@ -35,7 +35,7 @@ class SignUpController extends GetxController {
           await _auth.createUserWithEmailAndPassword(
               email: userEmail, password: userPassword);
 
-      await userCredential.user!.sendEmailVerification();
+      final time = DateTime.now().millisecondsSinceEpoch.toString();
 
       UserModel userModel = UserModel(
           city: userCity,
@@ -43,13 +43,15 @@ class SignUpController extends GetxController {
           Gender: '',
           language: 'English',
           dateOfBirth: '',
+          isOnline: false,
+          lastActive: time,
           updatedOn: DateTime.now(),
           joinedTime: formattedDateTime,
           updatedTime: formattedDateTime,
           country: '',
           createdOn: DateTime.now(),
           email: userEmail,
-          isAdmin: false,
+          isAdmin: true,
           isActive: true,
           phone: userPhone,
           street: '',

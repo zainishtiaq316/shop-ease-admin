@@ -67,26 +67,30 @@ class _AllUsersScreenState extends State<AllUsersScreen> {
                 final data = snapshot.data!.docs[index];
 
                 UserModel userModel = UserModel(
-                    country: data['uid'],
-        createdOn: data['createdOn'],
-        city: data['city'],
-        Gender : data['gender'],
-        language : data['language'],
-        email: data['email'],
-        dateOfBirth: data['dateOfBirth'],
-        isAdmin: data['isAdmin'],
-        isActive: data['isActive'],
-        phone: data['phone'],
-        street: data['street'],
-        uid: data['uid'],
-        updatedOn:data['updatedOn'],
-        userAddress: data['userAddress'],
-        userDeviceToken: data['userDeviceToken'],
-        userImg: data['userImg'],
-        firstName: data['firstName'],
-        updatedTime : data['updatedTime'],
-        joinedTime : data['joinedTime'],
-        lastName: data['lastName']);
+                    country: data['country'],
+                    createdOn: data['createdOn'],
+                    city: data['city'],
+                    Gender: data['gender'],
+                    language: data['language'],
+                    email: data['email'],
+                    dateOfBirth: data['dateOfBirth'],
+                    isAdmin: data['isAdmin'],
+                    isActive: data['isActive'],
+                    phone: data['phone'],
+                    street: data['street'],
+                    uid: data['uid'],
+                    updatedOn: data['updatedOn'],
+                    userAddress: data['userAddress'],
+                    userDeviceToken: data['userDeviceToken'],
+                    userImg: data['userImg'],
+                    firstName: data['firstName'],
+                    updatedTime: data['updatedTime'],
+                    joinedTime: data['joinedTime'],
+                    isOnline: data['is_online'] ??
+                        false, // Default value if not present
+                    lastActive: data['last_active'] ??
+                        '', // Default value if not present
+                    lastName: data['lastName']);
 
                 return Card(
                   elevation: 5,
